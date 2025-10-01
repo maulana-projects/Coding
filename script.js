@@ -2,7 +2,6 @@ const music = document.getElementById("bg-music");
 const startMusicBtn = document.getElementById("start-music");
 const musicControl = document.getElementById("music-control");
 
-
 const slides = document.querySelectorAll(".slide");
 let currentSlide = 0;
 
@@ -10,34 +9,31 @@ let currentSlide = 0;
 window.addEventListener("load", () => {
     music.play().then(() => {
         console.log("Musik otomatis diputar 🎶");
-        musicControl.style.display = "none"; //sembunyikan tombol
+        musicControl.style.display = "none"; // sembunyikan tombol kalau auto jalan
     }).catch(err => {
         console.warn("Autoplay dicegah browser:", err);
-        musicControl.style.display = "block"; //tampilkan tombol manual
+        musicControl.style.display = "block"; // tampilkan tombol manual
     });
 });
 
-// Tombol manual start musik
-startMusicBtn.addEventListener("click", () => {
-    music.play().then(() => {
-        console.log("Musik diputar setelah klik 🎵");
-        musicControl.style.display = "none"; //sembunyikan tombol
-    }).catch(err => {
-        console.error("Gagal memutar musik:", err);
-    });
-});
-
-// Tombol manual start musik hp
-function playMusic() {
-    music.play().then(() => {
-        console.log("Musik jalan di HP");
-    }).catch(err => {
-        console.error("Gagal play musik:", err);
-    });
+// 🔹 Play / Pause toggle musik
+function toggleMusic() {
+    if (music.paused) {
+        music.play().then(() => {
+            console.log("▶️ Musik diputar");
+            startMusicBtn.textContent = "⏸ Pause Musik";
+        }).catch(err => {
+            console.error("Gagal play musik:", err);
+        });
+    } else {
+        music.pause();
+        console.log("⏸ Musik dijeda");
+        startMusicBtn.textContent = "▶️ Putar Musik";
+    }
 }
 
-startMusicBtn.addEventListener("click", playMusic);
-startMusicBtn.addEventListener("touchstart", playMusic); //tambahan untuk HP
+// Event tombol musik (klik & sentuh)
+startMusicBtn.addEventListener("click", toggleMusic);
 
 // Next button untuk pindah slide
 document.querySelectorAll(".next-btn").forEach(btn => {
@@ -50,7 +46,7 @@ document.querySelectorAll(".next-btn").forEach(btn => {
 
 // Stop musik saat tab ditutup
 window.addEventListener("beforeunload", () => {
-    music.onpause();
+    music.pause();
     music.currentTime = 0;
 });
 
