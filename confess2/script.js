@@ -4,16 +4,37 @@ const startMusicBtn = document.getElementById("start-music");
 const slides = document.querySelectorAll(".slide");
 let currentSlide = 0;
 
-// Tombol musik (klik user = langsung play)
-startMusicBtn.addEventListener("click", () => {
+// ✅ Coba autoplay saat halaman load (khusus laptop/desktop)
+window.addEventListener("load", () => {
   music.play()
     .then(() => {
-      console.log("▶️ Musik diputar!");
-      startMusicBtn.style.display = "none"; // hilangin tombol setelah diputar
+      console.log("🎶 Musik autoplay jalan");
+      startMusicBtn.textContent = "⏸ Pause Musik"; // kalau autoplay berhasil
+      startMusicBtn.style.display = "block"; // tombol tetap ada buat pause
     })
-    .catch(err => {
-      console.error("❌ Gagal play musik:", err);
+    .catch(() => {
+      console.log("⛔ Autoplay dicegah, tampilkan tombol manual");
+      startMusicBtn.textContent = "▶️ Putar Musik";
+      startMusicBtn.style.display = "block"; 
     });
+});
+
+// ✅ Toggle Play/Pause
+startMusicBtn.addEventListener("click", () => {
+  if (music.paused) {
+    music.play()
+      .then(() => {
+        console.log("▶️ Musik diputar manual!");
+        startMusicBtn.textContent = "⏸ Pause Musik";
+      })
+      .catch(err => {
+        console.error("❌ Gagal play musik:", err);
+      });
+  } else {
+    music.pause();
+    console.log("⏸ Musik dijeda");
+    startMusicBtn.textContent = "▶️ Putar Musik";
+  }
 });
 
 // Next button untuk pindah slide
