@@ -4,14 +4,16 @@ const startMusicBtn = document.getElementById("start-music");
 const slides = document.querySelectorAll(".slide");
 let currentSlide = 0;
 
-// ✅ Tombol musik sederhana (HP friendly)
+// Tombol musik (klik user = langsung play)
 startMusicBtn.addEventListener("click", () => {
   music.play()
     .then(() => {
       console.log("▶️ Musik diputar!");
-      startMusicBtn.style.display = "none"; // sembunyikan tombol setelah berhasil
+      startMusicBtn.style.display = "none"; // hilangin tombol setelah diputar
     })
-    .catch(err => console.error("❌ Gagal play musik:", err));
+    .catch(err => {
+      console.error("❌ Gagal play musik:", err);
+    });
 });
 
 // Next button untuk pindah slide
@@ -21,12 +23,6 @@ document.querySelectorAll(".next-btn").forEach(btn => {
     currentSlide = (currentSlide + 1) % slides.length;
     slides[currentSlide].classList.add("active");
   });
-});
-
-// Stop musik saat tab ditutup
-window.addEventListener("beforeunload", () => {
-  music.pause();
-  music.currentTime = 0;
 });
 
 // Animasi hati
