@@ -27,6 +27,18 @@ startMusicBtn.addEventListener("click", () => {
     });
 });
 
+// Tombol manual start musik hp
+function playMusic() {
+    music.play().then(() => {
+        console.log("Musik jalan di HP");
+    }).catch(err => {
+        console.error("Gagal play musik:", err);
+    });
+}
+
+startMusicBtn.addEventListener("click", playMusic);
+startMusicBtn.addEventListener("touchstart", playMusic); //tambahan untuk HP
+
 // Next button untuk pindah slide
 document.querySelectorAll(".next-btn").forEach(btn => {
     btn.addEventListener("click", () => {

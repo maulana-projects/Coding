@@ -33,6 +33,9 @@ body{
 h1{
     font-size: 2.5rem;
     margin-bottom: 1rem;
+    text-align: center;
+    line-height: 1.2;
+    word-wrap: break-word;
 }
 
 p{
@@ -100,4 +103,13 @@ button:hover{
 @keyframes fadeIn{
     from{opacity: 0;}
     to{opacity: 1;}
+}
+
+@media (max-width: 630px) {
+    h1{
+        font-size: 2rem;
+    }
+    p{
+        font-size: 1.2rem;
+    }
 }
