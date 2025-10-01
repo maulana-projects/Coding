@@ -7,13 +7,14 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Musik -->
-<audio id="bg-music" src="assets/blue.mp3" preload="auto" loop></audio>
-
-<!-- Tombol Play Musik -->
-<div id="music-control">
-  <button id="start-music">🎵 Putar Musik</button>
-</div>
+   <!-- Musik -->
+  <audio id="bg-music" src="assets/blue.mp3" preload="auto" loop></audio>
+    
+  <!-- Tombol musik -->
+  <div id="music-control">
+    <button id="start-music">▶️ Play Music</button>
+    <button id="pause-music" style="display:none;">⏸️ Pause</button>
+  </div>
 
   <!-- Slides -->
   <div class="container">
@@ -37,6 +38,6 @@
   <!-- Animasi Hati -->
   <div class="hearts"></div>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>

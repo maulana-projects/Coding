@@ -1,43 +1,30 @@
 const music = document.getElementById("bg-music");
-const startMusicBtn = document.getElementById("start-music");
+const startBtn = document.getElementById("start-music");
+const pauseBtn = document.getElementById("pause-music");
 
 const slides = document.querySelectorAll(".slide");
 let currentSlide = 0;
 
-// ✅ Coba autoplay saat halaman load (khusus laptop/desktop)
-window.addEventListener("load", () => {
+// ✅ Play musik
+startBtn.addEventListener("click", () => {
   music.play()
     .then(() => {
-      console.log("🎶 Musik autoplay jalan");
-      startMusicBtn.textContent = "⏸ Pause Musik"; // kalau autoplay berhasil
-      startMusicBtn.style.display = "block"; // tombol tetap ada buat pause
+      console.log("▶️ Musik diputar");
+      startBtn.style.display = "none";
+      pauseBtn.style.display = "inline-block";
     })
-    .catch(() => {
-      console.log("⛔ Autoplay dicegah, tampilkan tombol manual");
-      startMusicBtn.textContent = "▶️ Putar Musik";
-      startMusicBtn.style.display = "block"; 
-    });
+    .catch(err => console.error("❌ Gagal play musik:", err));
 });
 
-// ✅ Toggle Play/Pause
-startMusicBtn.addEventListener("click", () => {
-  if (music.paused) {
-    music.play()
-      .then(() => {
-        console.log("▶️ Musik diputar manual!");
-        startMusicBtn.textContent = "⏸ Pause Musik";
-      })
-      .catch(err => {
-        console.error("❌ Gagal play musik:", err);
-      });
-  } else {
-    music.pause();
-    console.log("⏸ Musik dijeda");
-    startMusicBtn.textContent = "▶️ Putar Musik";
-  }
+// ✅ Pause musik
+pauseBtn.addEventListener("click", () => {
+  music.pause();
+  pauseBtn.style.display = "none";
+  startBtn.style.display = "inline-block";
+  console.log("⏸️ Musik dijeda");
 });
 
-// Next button untuk pindah slide
+// ✅ Slide control
 document.querySelectorAll(".next-btn").forEach(btn => {
   btn.addEventListener("click", () => {
     slides[currentSlide].classList.remove("active");
@@ -46,7 +33,7 @@ document.querySelectorAll(".next-btn").forEach(btn => {
   });
 });
 
-// Animasi hati
+// ✅ Animasi hati
 function createHeart() {
   const heart = document.createElement("div");
   heart.classList.add("heart");
