@@ -5,25 +5,29 @@ const musicControl = document.getElementById("music-control");
 const slides = document.querySelectorAll(".slide");
 let currentSlide = 0;
 
-// Coba autoplay saat halaman load
+// ❌ Hapus autoplay rumit supaya HP friendly
 window.addEventListener("load", () => {
+    // Cek autoplay, tapi jangan sembunyikan tombol dulu
     music.play().then(() => {
-        console.log("Musik otomatis diputar 🎶");
-        musicControl.style.display = "none"; // sembunyikan tombol kalau auto jalan
+        console.log("Musik autoplay jalan");
+        musicControl.style.display = "none";
     }).catch(err => {
-        console.warn("Autoplay dicegah browser:", err);
-        musicControl.style.display = "block"; // tampilkan tombol manual
+        console.warn("Autoplay diblok browser:", err);
+        musicControl.style.display = "block";
     });
 });
 
-// ✅ Play musik hanya sekali klik (HP friendly)
+// ✅ Tombol musik: hanya satu listener, delay sebelum sembunyikan
 startMusicBtn.addEventListener("click", () => {
-    music.play().then(() => {
-        console.log("▶️ Musik diputar dari tombol");
-        musicControl.style.display = "none"; // tombol hilang setelah jalan
-    }).catch(err => {
-        console.error("Gagal play musik:", err);
-    });
+    music.play()
+        .then(() => {
+            console.log("▶️ Musik diputar!");
+            // Sembunyikan tombol setelah 200ms supaya browser HP gak blok
+            setTimeout(() => {
+                startMusicBtn.style.display = "none";
+            }, 200);
+        })
+        .catch(err => console.error("Gagal play musik:", err));
 });
 
 // Next button untuk pindah slide
@@ -50,8 +54,6 @@ function createHeart() {
     heart.style.fontSize = Math.random() * 20 + 10 + "px";
     document.querySelector(".hearts").appendChild(heart);
 
-    setTimeout(() => {
-        heart.remove();
-    }, 5000);
+    setTimeout(() => heart.remove(), 5000);
 }
 setInterval(createHeart, 500);
